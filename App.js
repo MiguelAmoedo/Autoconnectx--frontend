@@ -6,6 +6,8 @@ import CadastroVendedor from './src/paginas/cadastroVendedor';
 import LoginCliente from './src/paginas/loginCliente';
 import LoginVendedorScreen from './src/paginas/loginVendedor';
 import AdicionarPeca from './src/paginas/adicionarPeca';
+import VendorControlScreen from './src/paginas/VendorControlScreen ';
+import LerPecasVendedor from './src/paginas/LerPecasVendedor';
 
 import Home from './src/paginas/home';
 
@@ -22,6 +24,8 @@ function App() {
         <Stack.Screen name="LoginVendedor" component={LoginVendedorScreen} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="AdicionarPeca" component={AdicionarPeca} />
+        <Stack.Screen name="VendorControlScreen" component={VendorControlScreen} />
+        <Stack.Screen name="LerPecasVendedor" component={LerPecasVendedor} />
       </Stack.Navigator>
     </NavigationContainer>
   );

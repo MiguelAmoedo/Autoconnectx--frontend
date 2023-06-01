@@ -26,7 +26,7 @@ const LoginVendedor = () => {
       if (response.ok) {
         await AsyncStorage.setItem('authToken', data.token);
         Alert.alert('Sucesso', data.message);
-        navigation.navigate('AdicionarPeca'); // Navigate to the "AdicionarPeca" screen
+        navigation.navigate('VendorControlScreen'); // Navigate to the "AdicionarPeca" screen
       } else {
         Alert.alert('Erro', data.error);
       }
