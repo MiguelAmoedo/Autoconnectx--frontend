@@ -25,7 +25,7 @@ const Login = ({ navigation }) => {
         // Login bem-sucedido
         Alert.alert('Sucesso', data.message);
         // Redirecionar para a próxima tela após o login
-        // navigation.navigate('PróximaTela');
+        navigation.navigate('selecaoDePecas'); // Navigate to the "AdicionarPeca" screen
       } else {
         // Exibir mensagem de erro caso o login tenha falhado
         Alert.alert('Erro', data.message);
