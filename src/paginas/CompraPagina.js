@@ -1,54 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const CompraPagina = ({ route }) => {
-    console.log('pecaId:', route.params.pecaId); // Verifica o valor de pecaId
-  
-    const { pecaId } = route.params;
-    const [peca, setPeca] = useState(null);
-    const [vendedor, setVendedor] = useState(null);
-  
-    useEffect(() => {
-      fetch(`http://10.0.2.2:5000/pecas/${pecaId}`)
-        .then((response) => response.json())
-        .then((data) => setPeca(data))
-        .catch((error) => console.log('Erro ao obter informações da peça:', error));
-    }, [pecaId]);
+  // Extract the pieceId from the route parameters
+  const { pecaId } = route.params;
 
-  useEffect(() => {
-    if (peca && peca.vendedorId) {
-      fetch(`http://10.0.2.2:5000/vendedores/${peca.vendedorId}`)
-        .then((response) => response.json())
-        .then((data) => setVendedor(data))
-        .catch((error) => console.log('Erro ao obter informações do vendedor:', error));
-    }
-  }, [peca]);
+  // Fetch the piece data using the pecaId and display the information
 
-  if (!peca || !vendedor) {
-    return (
-      <View style={styles.loadingContainer}>
-        <Text style={styles.loadingText}>Carregando...</Text>
-      </View>
-    );
-  }
+  // Handle the purchase process
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{peca.nome}</Text>
-
-      <View style={styles.priceContainer}>
-        <Text style={styles.price}>R$ {peca.preco}</Text>
-      </View>
-
-      <View style={styles.vendedorContainer}>
-        <Text style={styles.vendedorText}>Vendedor: {vendedor.nome}</Text>
-      </View>
-
-      <View style={styles.descriptionContainer}>
-        <Text style={styles.description}>{peca.descricao}</Text>
-      </View>
-
-      {/* Aqui você pode adicionar mais informações ou componentes conforme necessário */}
+      {/* Display the piece information */}
+      <Text style={styles.title}>Peça ID: {pecaId}</Text>
+      {/* Display other information about the piece */}
+      
+      {/* Button to proceed with the purchase */}
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Comprar</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -56,40 +26,25 @@ const CompraPagina = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 24,
-  },
-  loadingContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  loadingText: {
-    fontSize: 18,
-  },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
-  priceContainer: {
-    marginBottom: 16,
-  },
-  price: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  vendedorContainer: {
-    marginBottom: 16,
-  },
-  vendedorText: {
     fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
   },
-  descriptionContainer: {
-    marginBottom: 24,
+  button: {
+    backgroundColor: 'green',
+    padding: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+    marginTop: 20,
   },
-  description: {
+  buttonText: {
+    color: 'white',
     fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

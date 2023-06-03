@@ -2,12 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const SelecaoDePecas = () => {
-const getPieceIdFromRoute = () => {
-const route = navigation.dangerouslyGetState().routes.find((r) => r.name === 'CompraPagina');
-return route?.params?.pecaId || null;
-      };
-      
+const selecaoDePecas = () => {
   const navigation = useNavigation();
   const [marca, setMarca] = useState('');
   const [modelo, setModelo] = useState('');
@@ -15,18 +10,15 @@ return route?.params?.pecaId || null;
   const [pecas, setPecas] = useState([]);
   const [erro, setErro] = useState(null);
   const [exibirResultado, setExibirResultado] = useState(false); 
-  useEffect(() => {
-    const pieceId = getPieceIdFromRoute();
-    if (pieceId) {
-      // Faça o que for necessário com o ID da peça recuperado, como realizar uma requisição para obter os detalhes da peça.
-      console.log('ID da peça:', pieceId);
-    }
-  }, []);
-  
 
   const handleSelectPiece = async () => {
+    if (!marca || !modelo || !ano) {
+      setErro('Preencha todos os campos antes de buscar.');
+      return;
+    }
+
     try {
-      const response = await fetch(`http://10.0.2.2:5000/pecas`);
+      const response = await fetch('http://10.0.2.2:5000/pecas');
       const data = await response.json();
 
       if (response.ok) {
@@ -62,8 +54,8 @@ return route?.params?.pecaId || null;
 
   const handleBuy = (pecaId) => {
     navigation.navigate('CompraPagina', { pecaId });
-    console.log('Redirecionar para a página de compra:', pecaId);
   };
+  
 
   const handleReturn = () => {
     setMarca('');
@@ -141,8 +133,6 @@ return route?.params?.pecaId || null;
   );
 };
 
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -214,4 +204,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SelecaoDePecas;
+export default selecaoDePecas;
