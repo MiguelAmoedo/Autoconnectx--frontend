@@ -1,28 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CompraPagina({ route }) {
-  const { idPeca } = route.params;
+  const { idPeca, token } = route.params;
   const [peca, setPeca] = useState(null);
   const [vendedor, setVendedor] = useState(null);
   const navigation = useNavigation();
 
   useEffect(() => {
-    fetch(`http://10.0.2.2:5000/pecas/${idPeca}`)
+    fetch(`http://10.0.2.2:5000/pecas/${idPeca}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(response => response.json())
       .then(data => setPeca(data))
       .catch(error => console.error(error));
-  }, [idPeca]);
+  }, [idPeca, token]);
 
   useEffect(() => {
     if (peca) {
-      fetch(`http://10.0.2.2:5000/vendedores/${peca.idVendedor}`)
+      fetch(`http://10.0.2.2:5000/vendedores/${peca.idVendedor}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then(response => response.json())
         .then(data => setVendedor(data))
         .catch(error => console.error(error));
     }
-  }, [peca]);
+  }, [peca, token]);
 
   if (!peca || !vendedor) {
     return (
@@ -53,113 +62,123 @@ export default function CompraPagina({ route }) {
   };
 
   const adicionarAoCarrinho = (idPeca, clienteId, quantidade) => {
-    // Enviar a requisição para adicionar ao carrinho
     fetch('http://10.0.2.2:5000/compras/carrinho', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        idPeca,
+        compraId: 'ID_DA_COMPRA', // Altere com o ID da compra em andamento do cliente logado
         clienteId,
+        pecaId: idPeca,
         quantidade,
       }),
     })
       .then(response => response.json())
       .then(data => {
         console.log('Item adicionado ao carrinho:', data);
-        navigation.navigate('Carrinho'); // Navega para a tela do carrinho
+        navigation.navigate('CarrinhoScreen');
+      })
+      .catch(error => console.error(error));
+  };
+
+  const finalizarCompra = () => {
+    fetch(`http://10.0.2.2:5000/compras/finalizar/ID_DA_COMPRA`, { // Altere com o ID da compra em andamento do cliente logado
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Compra finalizada:', data);
+        navigation.navigate('CarrinhoScreen');
       })
       .catch(error => console.error(error));
   };
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.imageContainer} />
-      <View style={styles.detailsContainer}>
-        <Text style={styles.title}>{peca.nome}</Text>
-        <Text style={styles.price}>R$ {peca.preco}</Text>
-        <Text style={styles.seller}>Vendedor: {vendedor.nome}</Text>
-        <View style={styles.descriptionContainer}>
-          <Text style={styles.descriptionTitle}>Descrição:</Text>
-          <Text style={styles.descriptionText}>{peca.descricao}</Text>
-        </View>
+      <View style={styles.pecaContainer}>
+        <Text style={styles.nome}>{peca.nome}</Text>
+        <Text style={styles.preco}>Preço: R$ {peca.preco.toFixed(2)}</Text>
+        <Text style={styles.vendedor}>Vendedor: {vendedor.nome}</Text>
+        <Text style={styles.descricaoTitle}>Descrição:</Text>
+        <Text style={styles.descricaoText}>{peca.descricao}</Text>
         <TouchableOpacity style={styles.comprarButton} onPress={handleComprar}>
           <Text style={styles.comprarButtonText}>Comprar</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.carrinhoButton} onPress={handleAdicionarCarrinho}>
           <Text style={styles.carrinhoButtonText}>Adicionar ao Carrinho</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.carrinhoButton} onPress={finalizarCompra}>
+          <Text style={styles.carrinhoButtonText}>Finalizar Compra</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
 }
 
-const { width } = Dimensions.get('window');
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 16,
     backgroundColor: '#fff',
   },
-  imageContainer: {
-    width: '100%',
-    height: width * 0.75, // Aspect ratio 4:3
-    backgroundColor: '#f0f0f0',
-    marginBottom: 16,
-  },
-  detailsContainer: {
+  pecaContainer: {
+    width: Dimensions.get('window').width - 32,
+    backgroundColor: '#f1f1f1',
+    borderRadius: 8,
     padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  price: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    color: '#007bff',
-  },
-  seller: {
-    fontSize: 16,
-    marginBottom: 8,
-  },
-  descriptionContainer: {
-    marginBottom: 16,
-  },
-  descriptionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  descriptionText: {
-    fontSize: 16,
-  },
-  comprarButton: {
-    backgroundColor: '#5cc6ba',
-    borderRadius: 4,
-    paddingVertical: 12,
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  comprarButtonText: {
-    fontSize: 16,
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  carrinhoButton: {
-    backgroundColor: '#ccc',
-    borderRadius: 4,
-    paddingVertical: 12,
-    alignItems: 'center',
-  },
-  carrinhoButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
   },
   loadingText: {
     fontSize: 16,
+    textAlign: 'center',
+  },
+  nome: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  preco: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  vendedor: {
+    fontSize: 16,
+    marginBottom: 16,
+  },
+  descricaoTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  descricaoText: {
+    fontSize: 16,
+    marginBottom: 16,
+  },
+  comprarButton: {
+    backgroundColor: '#333',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  comprarButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  carrinhoButton: {
+    backgroundColor: '#666',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  carrinhoButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
   },
 });

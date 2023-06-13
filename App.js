@@ -16,6 +16,9 @@ import AdicionarPeca from './src/telas/adicionarPeca';
 import GerenciarPeca from './src/telas/gerenciarPeca';
 import ResultadoFiltro from './src/telas/resultadoFiltro';
 import CompraPagina from './src/telas/compra';
+import CarrinhoScreen from './src/telas/carrinhoScreen';
+import AddToCartScreen from './src/telas/testeCart';
+//AddToCartScreen
 //SelecioneSuaPeca
 //GerenciarPeca
 //CompraPagina
@@ -36,6 +39,8 @@ function App() {
         <Stack.Screen name="GerenciarPeca" component={GerenciarPeca} />
         <Stack.Screen name="ResultadoFiltro" component={ResultadoFiltro} />
         <Stack.Screen name="CompraPagina" component={CompraPagina} />
+        <Stack.Screen name="CarrinhoScreen" component={CarrinhoScreen} />
+        <Stack.Screen name="AddToCartScreen" component={AddToCartScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

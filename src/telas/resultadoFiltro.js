@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ResultadoFiltro() {
   const navigation = useNavigation();
   const route = useRoute();
-  const { marca, modelo, ano } = route.params;
+  const { marca, modelo, ano, token } = route.params;
   const [pecas, setPecas] = useState([]);
 
   const buscarPecas = async () => {
     try {
       // Aqui você pode fazer a requisição ao backend para buscar as peças com base nos critérios selecionados
-      const response = await fetch(`http://10.0.2.2:5000/pecas/pecas?marca=${marca}&modelo=${modelo}&ano=${ano}`);
+      const response = await fetch(`http://10.0.2.2:5000/pecas/pecas?marca=${marca}&modelo=${modelo}&ano=${ano}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = await response.json();
-      
+
       // Verifica se há peças correspondentes aos filtros
       if (Array.isArray(data) && data.length > 0) {
         setPecas(data);

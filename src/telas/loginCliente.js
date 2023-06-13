@@ -29,7 +29,7 @@ const Login = ({ navigation }) => {
         // Salvar o token de autenticação no armazenamento local
         await AsyncStorage.setItem('authToken', data.token);
         // Redirecionar para a próxima tela após o login
-        navigation.navigate('Filtro');
+        navigation.navigate('AddToCartScreen');
       } else {
         // Exibir mensagem de erro caso o login tenha falhado
         Alert.alert('Erro', data.message);

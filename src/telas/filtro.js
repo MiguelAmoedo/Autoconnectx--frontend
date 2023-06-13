@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Filtro() {
   const navigation = useNavigation();
   const [marca, setMarca] = useState('');
   const [modelo, setModelo] = useState('');
   const [ano, setAno] = useState('');
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    // Função para buscar o token armazenado no AsyncStorage
+    const getToken = async () => {
+      try {
+        const storedToken = await AsyncStorage.getItem('authToken');
+        if (storedToken) {
+          setToken(storedToken);
+        }
+      } catch (error) {
+        console.log('Erro ao buscar o token:', error);
+      }
+    };
+
+    // Chame a função para buscar o token ao iniciar o componente
+    getToken();
+  }, []);
 
   const handleSelectPiece = () => {
     if (!marca || !modelo || !ano) {
@@ -14,7 +33,7 @@ export default function Filtro() {
       return;
     }
 
-    navigation.navigate('ResultadoFiltro', { marca, modelo, ano });
+    navigation.navigate('ResultadoFiltro', { marca, modelo, ano, token });
   };
 
   return (
