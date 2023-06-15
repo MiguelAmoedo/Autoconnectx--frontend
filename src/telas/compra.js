@@ -41,62 +41,25 @@ export default function CompraPagina({ route }) {
     );
   }
 
+  const handleFinalizarCompra = () => {
+    console.log('Compra finalizada');
+  };
+
   const handleComprar = () => {
     console.log('Compra realizada');
   };
 
-  const handleAdicionarCarrinho = () => {
-    Alert.prompt('Quantidade', 'Digite a quantidade desejada:', [
-      {
-        text: 'Cancelar',
-        style: 'cancel',
-      },
-      {
-        text: 'Adicionar',
-        onPress: (quantidade) => {
-          const clienteId = 123; // Altere com o ID do cliente logado
-          adicionarAoCarrinho(idPeca, clienteId, parseInt(quantidade));
-        },
-      },
-    ]);
+  const handleAdicionarCarrinho = async () => {
+    try {
+      const clienteId = await AsyncStorage.getItem('clienteId');
+      navigation.navigate('CarrinhoScreen', { idCliente: clienteId, token });
+    } catch (error) {
+      console.error('Erro ao obter o ID do cliente do AsyncStorage:', error);
+    }
   };
 
-  const adicionarAoCarrinho = (idPeca, clienteId, quantidade) => {
-    fetch('http://10.0.2.2:5000/compras/carrinho', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        compraId: 'ID_DA_COMPRA', // Altere com o ID da compra em andamento do cliente logado
-        clienteId,
-        pecaId: idPeca,
-        quantidade,
-      }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Item adicionado ao carrinho:', data);
-        navigation.navigate('CarrinhoScreen');
-      })
-      .catch(error => console.error(error));
-  };
-
-  const finalizarCompra = () => {
-    fetch(`http://10.0.2.2:5000/compras/finalizar/ID_DA_COMPRA`, { // Altere com o ID da compra em andamento do cliente logado
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Compra finalizada:', data);
-        navigation.navigate('CarrinhoScreen');
-      })
-      .catch(error => console.error(error));
-  };
-
+  
+  
   return (
     <ScrollView style={styles.container}>
       <View style={styles.pecaContainer}>
@@ -111,7 +74,7 @@ export default function CompraPagina({ route }) {
         <TouchableOpacity style={styles.carrinhoButton} onPress={handleAdicionarCarrinho}>
           <Text style={styles.carrinhoButtonText}>Adicionar ao Carrinho</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.carrinhoButton} onPress={finalizarCompra}>
+        <TouchableOpacity style={styles.carrinhoButton} onPress={handleFinalizarCompra}>
           <Text style={styles.carrinhoButtonText}>Finalizar Compra</Text>
         </TouchableOpacity>
       </View>

@@ -1,68 +1,51 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, Alert } from 'react-native';
 import axios from 'axios';
 
-const CarrinhoScreen = () => {
-  const [carrinho, setCarrinho] = useState([]);
+const CarrinhoScreen = ({ route }) => {
+  const [carrinho, setCarrinho] = useState(null);
+  const { idCliente, token } = route.params;
 
-  // Função para carregar os itens do carrinho do cliente
-  const carregarCarrinho = async () => {
+  useEffect(() => {
+    fetchCarrinho();
+  }, []);
+
+  const fetchCarrinho = async () => {
     try {
-      const response = await axios.get('http://10.0.2.2:5000/${compraId}'); // Substitua pelo endpoint correto da sua API
-      const carrinhoData = response.data;
-      setCarrinho(carrinhoData);
+      const response = await axios.get(`http://10.0.2.2:5000/carrinhoget/${idCliente}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setCarrinho(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    carregarCarrinho();
-  }, []);
-
-  // Função para remover um item do carrinho
-  const removerItemCarrinho = async (itemId) => {
-    try {
-      await axios.delete(`http://10.0.2.2:5000/carrinho/${itemId}`); // Substitua pelo endpoint correto da sua API
-      carregarCarrinho(); // Recarrega os itens do carrinho após a remoção
-    } catch (error) {
-      console.log(error);
+    if (carrinho && carrinho.itens.length === 0) {
+      Alert.alert('Carrinho Vazio', 'Seu carrinho de compras está vazio');
     }
-  };
-
-  // Função para finalizar a compra
-  const finalizarCompra = async () => {
-    try {
-      await axios.post(`http://10.0.2.2:5000/finalizar/${compraId}`); // Substitua pelo endpoint correto da sua API
-      // Lógica adicional após a finalização da compra (redirecionar, exibir mensagem, etc.)
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // Renderizar cada item do carrinho na lista
-  const renderItem = ({ item }) => (
-    <View style={{ padding: 10 }}>
-      <Text>{item.nome}</Text>
-      <Text>Preço: R$ {item.preco}</Text>
-      <Text>Quantidade: {item.quantidade}</Text>
-      <TouchableOpacity onPress={() => removerItemCarrinho(item.id)}>
-        <Text>Remover</Text>
-      </TouchableOpacity>
-    </View>
-  );
+  }, [carrinho]);
 
   return (
-    <View style={{ flex: 1 }}>
-      <Text style={{ fontSize: 24, fontWeight: 'bold', marginVertical: 20 }}>Carrinho</Text>
-      <FlatList
-        data={carrinho}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
-      />
-      <TouchableOpacity onPress={finalizarCompra} style={{ backgroundColor: 'blue', padding: 10 }}>
-        <Text style={{ color: 'white', textAlign: 'center' }}>Finalizar Compra</Text>
-      </TouchableOpacity>
+    <View>
+      <Text>Carrinho de Compras</Text>
+      {carrinho && carrinho.itens.length > 0 ? (
+        <FlatList
+          data={carrinho.itens}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => (
+            <View>
+              <Text>{item.peca.nome}</Text>
+              <Text>Quantidade: {item.quantidade}</Text>
+              <Text>Preço Unitário: {item.precoUnitario}</Text>
+              <Text>Preço Total: {item.precoTotal}</Text>
+            </View>
+          )}
+        />
+      ) : (
+        <Text>O carrinho está vazio</Text>
+      )}
     </View>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -29,7 +29,12 @@ export default function Filtro() {
 
   const handleSelectPiece = () => {
     if (!marca || !modelo || !ano) {
-      alert('Preencha todos os campos antes de buscar.');
+      Alert.alert('Erro', 'Preencha todos os campos antes de buscar.');
+      return;
+    }
+
+    if (!token) {
+      Alert.alert('Erro', 'Você não está autenticado. Faça o login primeiro');
       return;
     }
 
