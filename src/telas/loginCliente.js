@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Logo from '../components/logo';
@@ -6,6 +6,7 @@ import Logo from '../components/logo';
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [clienteId, setClienteId] = useState('');
 
   const handleLogin = async () => {
     try {
@@ -26,8 +27,14 @@ const Login = ({ navigation }) => {
       if (response.ok) {
         // Login bem-sucedido
         Alert.alert('Sucesso', data.message);
-        // Salvar o token de autenticação no armazenamento local
+        // Salvar o token de autenticação no AsyncStorage
         await AsyncStorage.setItem('authToken', data.token);
+        // Armazenar o ID do cliente em uma variável
+        const clienteId = data.clienteId;
+        // Salvar o ID do cliente no AsyncStorage
+        await AsyncStorage.setItem('logIdCliente', clienteId);
+        // Atualizar o estado clienteId
+        setClienteId(clienteId);
         // Redirecionar para a próxima tela após o login
         navigation.navigate('Filtro');
       } else {
@@ -40,10 +47,20 @@ const Login = ({ navigation }) => {
     }
   };
 
+  useEffect(() => {
+    const loadClienteId = async () => {
+      const storedClienteId = await AsyncStorage.getItem('logIdCliente');
+      if (storedClienteId) {
+        setClienteId(storedClienteId);
+      }
+    };
+    loadClienteId();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-      <Image
+        <Image
           source={require('../assets/logo.png')}
           style={styles.logo}
         />
@@ -81,6 +98,9 @@ const Login = ({ navigation }) => {
           Você é um vendedor? Clique aqui
         </Text>
       </TouchableOpacity>
+      {clienteId && (
+        <Text style={styles.clienteIdText}>ID do cliente: {clienteId}</Text>
+      )}
     </View>
   );
 };
@@ -90,61 +110,54 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    backgroundColor: '#fff',
   },
   logoContainer: {
-    top: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-    marginTop: -200
+    marginBottom: 16,
   },
   logo: {
-    width: 246,
-    height: 246,
+    width: 150,
+    height: 150,
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 16,
   },
   input: {
-    width: '100%',
+    width: '80%',
     height: 40,
     borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 31,
-    marginBottom: 10,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    marginBottom: 16,
     paddingHorizontal: 10,
-    textAlign: 'center',
   },
   button: {
-    width: '100%',
-    height: 40,
-    borderRadius: 31,
-    backgroundColor: '#5cc6ba',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10,
+    backgroundColor: '#333',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    marginBottom: 16,
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
+    textAlign: 'center',
   },
   createAccountText: {
-    color: '#A0A0A0',
+    fontSize: 16,
   },
   createSellerAccountButton: {
-    position: 'absolute',
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: 60,
+    marginTop: 32,
   },
   createSellerAccountText: {
-    color: '#A0A0A0',
+    fontSize: 16,
+    color: '#333',
+  },
+  clienteIdText: {
+    fontSize: 16,
+    marginTop: 16,
   },
 });
 
