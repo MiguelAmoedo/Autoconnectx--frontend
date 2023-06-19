@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Dimensions, Alert } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Dimensions, Alert, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -12,7 +12,7 @@ export default function ResultadoFiltro() {
   const buscarPecas = async () => {
     try {
       // Aqui você pode fazer a requisição ao backend para buscar as peças com base nos critérios selecionados
-      const response = await fetch(`http://10.0.2.2:5000/pecas/pecas?marca=${marca}&modelo=${modelo}&ano=${ano}`, {
+      const response = await fetch(`http://10.0.2.2:5000/pecas?marca=${marca}&modelo=${modelo}&ano=${ano}}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -40,16 +40,12 @@ export default function ResultadoFiltro() {
 
   const renderItem = ({ item }) => (
     <View style={styles.pecaContainer}>
-      <Text style={styles.pecaText}>{item.nome}</Text>
-      <Text style={styles.pecaText}>{item.descricao}</Text>
-      <View style={styles.infoContainer}>
-        <View style={styles.precoContainer}>
-          <Text style={styles.precoSymbol}>R$</Text>
-          <Text style={styles.precoValue}>{item.preco}</Text>
-        </View>
-        <Text style={styles.qtdEstoqueText}>Qtd: {item.qtdEstoque}</Text>
+      <View style={styles.imagemContainer}>
+        <Image source={{ uri: item.imagem }} style={styles.imagemPeca} />
       </View>
-      {/* Adicione outros campos que deseja exibir */}
+      <Text style={styles.pecaNome}>{item.nome}</Text>
+      <Text style={styles.pecaValor}>R$ {item.preco}</Text>
+      <Text style={styles.partesVeiculo}>{item.partesVeiculo}</Text>
       <TouchableOpacity style={styles.comprarButton} onPress={() => handleComprar(item._id)}>
         <Text style={styles.comprarButtonText}>Comprar</Text>
       </TouchableOpacity>
@@ -102,34 +98,28 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 8,
   },
-  pecaText: {
+  imagemContainer: {
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  imagemPeca: {
+    width: 100,
+    height: 100,
+  },
+  pecaNome: {
+    fontSize: 16,
+    marginBottom: 8,
+    fontWeight: 'bold',
+  },
+  pecaValor: {
     fontSize: 16,
     marginBottom: 8,
   },
-  infoContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  precoContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  precoSymbol: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginRight: 4,
-  },
-  precoValue: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  qtdEstoqueText: {
+  partesVeiculo: {
     fontSize: 14,
     color: '#888',
   },
   comprarButton: {
-    marginTop: 12,
     backgroundColor: '#5cc6ba',
     borderRadius: 4,
     paddingVertical: 8,

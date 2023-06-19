@@ -90,8 +90,9 @@ const LerPecasVendedor = () => {
   };
 
   const handleEdit = (peca) => {
-    navigation.navigate('AdicionarPeca', { peca });
-  };
+  navigation.navigate('AdicionarPeca', { peca });
+};
+
 
   const renderItem = ({ item }) => (
     <View style={styles.pecaContainer}>

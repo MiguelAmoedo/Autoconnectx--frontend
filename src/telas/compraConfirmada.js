@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const CompraConfirmada = ({ route }) => {
   const { pecaId } = route.params;
@@ -37,6 +38,7 @@ const CompraConfirmada = ({ route }) => {
     }
   };
 
+
   if (loading) {
     return (
       <View style={styles.container}>
@@ -62,6 +64,7 @@ const CompraConfirmada = ({ route }) => {
         <Text style={styles.info}>Entre em contato com o vendedor:</Text>
         <Text style={styles.info}>Nome: {vendedor.nome}</Text>
         <Text style={styles.info}>Telefone: {vendedor.telefone}</Text>
+      
       </View>
     </View>
   );
@@ -73,7 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
   },
   title: {
     fontSize: 24,
@@ -83,17 +86,32 @@ const styles = StyleSheet.create({
   message: {
     fontSize: 16,
     textAlign: 'center',
+    marginBottom: 20,
   },
   idPeca: {
     fontSize: 16,
-    marginTop: 10,
+    marginBottom: 10,
   },
   infoContainer: {
     marginTop: 20,
+    alignItems: 'center',
   },
   info: {
     fontSize: 16,
-    marginTop: 10,
+    marginBottom: 10,
+  },
+  button: {
+    backgroundColor: '#3483fa',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 

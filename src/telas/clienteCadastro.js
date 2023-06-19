@@ -99,54 +99,36 @@ const Cadastro = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  logoContainer: {
-    alignItems: 'center',
-    marginTop: 50,
-    marginBottom: 20,
-  },
-  logo: {
-    height: 150,
-    width: 140,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  input: {
-    width: '100%',
-    height: 40,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 31,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-    textAlign: 'center',
-  },
-  button: {
-    width: '100%',
-    height: 40,
-    borderRadius: 31,
-    backgroundColor: '#5cc6ba',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  loginText: {
-    color: '#A0A0A0',
-  },
-});
+    const styles = StyleSheet.create({
+      container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      },
+      label: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginBottom: 5,
+      },
+      input: {
+      height: 40,
+      width: '80%',
+      borderWidth: 1,
+      borderColor: 'gray',
+      marginBottom: 20,
+      paddingHorizontal: 10,
+      },
+      button: {
+      backgroundColor: '#5cc6ba',
+      padding: 10,
+      alignItems: 'center',
+      borderRadius: 5,
+      },
+      buttonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: 'bold',
+      },
+      });
 
 export default Cadastro;

@@ -37,6 +37,11 @@ const Login = ({ navigation }) => {
         setClienteId(clienteId);
         // Redirecionar para a próxima tela após o login
         navigation.navigate('Filtro');
+        // Exibir alerta ao navegar para a página "Filtro"
+        Alert.alert(
+          'Atenção',
+          'Gostaríamos de ressaltar que o nosso papel é meramente informativo, fornecendo orientações sobre onde encontrar a peça que você precisa. No entanto, não podemos assumir responsabilidade por quaisquer problemas que possam surgir durante o processo de negociação com o vendedor. É essencial que você conduza qualquer transação com cautela, verificando cuidadosamente o estado da peça e tomando precauções para evitar possíveis golpes ou fraudes.'
+        );
       } else {
         // Exibir mensagem de erro caso o login tenha falhado
         Alert.alert('Erro', data.message);
@@ -98,9 +103,7 @@ const Login = ({ navigation }) => {
           Você é um vendedor? Clique aqui
         </Text>
       </TouchableOpacity>
-      {clienteId && (
-        <Text style={styles.clienteIdText}>ID do cliente: {clienteId}</Text>
-      )}
+      
     </View>
   );
 };
@@ -111,13 +114,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
+    marginBottom: 0,
+    paddingBottom: 250
   },
   logoContainer: {
-    marginBottom: 16,
+    marginBottom: -16,
   },
   logo: {
-    width: 150,
-    height: 150,
+    width: 350,
+    height: 350,
+    marginBottom: 20
   },
   title: {
     fontSize: 24,
@@ -134,7 +140,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: '#333',
+    backgroundColor: '#5cc6ba',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
@@ -150,10 +156,12 @@ const styles = StyleSheet.create({
   },
   createSellerAccountButton: {
     marginTop: 32,
+   
   },
   createSellerAccountText: {
     fontSize: 16,
-    color: '#333',
+    color: '#999',
+   
   },
   clienteIdText: {
     fontSize: 16,
