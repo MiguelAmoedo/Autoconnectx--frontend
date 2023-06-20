@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import axios from 'axios';
 import Clipboard from '@react-native-clipboard/clipboard';
 
@@ -38,7 +38,6 @@ const CompraConfirmada = ({ route }) => {
     }
   };
 
-
   if (loading) {
     return (
       <View style={styles.container}>
@@ -59,12 +58,21 @@ const CompraConfirmada = ({ route }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Compra confirmada!</Text>
       <Text style={styles.message}>Sua compra foi confirmada com sucesso.</Text>
-      <Text style={styles.idPeca}>Id da peça: {peca.idVendedor}</Text>
+      <Text style={styles.idPeca}>ID da peça: {peca._id}</Text>
       <View style={styles.infoContainer}>
         <Text style={styles.info}>Entre em contato com o vendedor:</Text>
         <Text style={styles.info}>Nome: {vendedor.nome}</Text>
         <Text style={styles.info}>Telefone: {vendedor.telefone}</Text>
-      
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            Linking.openURL(`https://wa.me/${vendedor.telefone}?text=Olá, tenho interesse na peça: ${peca.nome}`)
+          }
+        >
+          <Text style={styles.buttonText}>Entrar em contato via WhatsApp</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -75,22 +83,25 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F7F7F7',
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#292929',
   },
   message: {
     fontSize: 16,
     textAlign: 'center',
     marginBottom: 20,
+    color: '#616161',
   },
   idPeca: {
     fontSize: 16,
     marginBottom: 10,
+    color: '#616161',
   },
   infoContainer: {
     marginTop: 20,
@@ -99,16 +110,19 @@ const styles = StyleSheet.create({
   info: {
     fontSize: 16,
     marginBottom: 10,
+    color: '#616161',
+  },
+  buttonContainer: {
+    marginTop: 20,
   },
   button: {
-    backgroundColor: '#3483fa',
+    backgroundColor: '#128C7E',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
-    marginTop: 20,
   },
   buttonText: {
-    color: '#fff',
+    color: '#FFF',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 16,
@@ -116,3 +130,4 @@ const styles = StyleSheet.create({
 });
 
 export default CompraConfirmada;
+

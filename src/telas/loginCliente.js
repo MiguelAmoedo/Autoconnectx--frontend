@@ -70,7 +70,7 @@ const Login = ({ navigation }) => {
           style={styles.logo}
         />
       </View>
-      <Text style={styles.title}>AUTOCONNECTX</Text>
+      
       <TextInput
         style={styles.input}
         placeholder="E-mail"
@@ -156,11 +156,15 @@ const styles = StyleSheet.create({
   },
   createSellerAccountButton: {
     marginTop: 32,
+    marginBottom: -10,
+    marginVertical: -100
    
   },
   createSellerAccountText: {
     fontSize: 16,
     color: '#999',
+    marginBottom: -10,
+    
    
   },
   clienteIdText: {

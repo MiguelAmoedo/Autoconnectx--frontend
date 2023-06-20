@@ -12,7 +12,7 @@ const AdicionarPeca = () => {
   const [nome, setNome] = useState('');
   const [imagem, setImagem] = useState('');
   const [tipoDePeca, setTipoDePeca] = useState('Motor');
-  const [marca, setMarca] = useState('');
+  const [marca, setMarca] = useState('Chevrolet');
   const [modelo, setModelo] = useState('');
   const [ano, setAno] = useState('');
   const [descricao, setDescricao] = useState('');

@@ -64,9 +64,6 @@ const App = () => {
         <Stack.Screen
           name="CadastroVendedor"
           component={CadastroVendedor}
-          options={({ navigation }) => ({
-            headerTitle: () => <Header title="AutoConnectX" navigation={navigation} />,
-          })}
         />
         <Stack.Screen
           name="Login"
