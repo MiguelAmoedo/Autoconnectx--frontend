@@ -11,8 +11,7 @@ export default function ResultadoFiltro() {
 
   const buscarPecas = async () => {
     try {
-      // Aqui você pode fazer a requisição ao backend para buscar as peças com base nos critérios selecionados
-      const response = await fetch(`http://10.0.2.2:5000/pecas?marca=${marca}&modelo=${modelo}&ano=${ano}}`, {
+      const response = await fetch(`http://10.0.2.2:5000/pecas/pesquisa?marca=${marca}&modelo=${modelo}&ano=${ano}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -20,8 +19,8 @@ export default function ResultadoFiltro() {
       const data = await response.json();
 
       // Verifica se há peças correspondentes aos filtros
-      if (Array.isArray(data) && data.length > 0) {
-        setPecas(data);
+      if (Array.isArray(data.result) && data.result.length > 0) {
+        setPecas(data.result);
       } else {
         setPecas([]);
       }
@@ -74,76 +73,81 @@ export default function ResultadoFiltro() {
   );
 }
 
-const { width } = Dimensions.get('window');
-const itemWidth = width * 0.9;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16,
+    marginBottom: 20,
   },
   listContentContainer: {
-    paddingBottom: 32,
+    paddingBottom: 20,
   },
   pecaContainer: {
-    marginBottom: 24,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: '#ccc',
+    marginVertical: 10,
+    padding: 10,
     borderRadius: 8,
+    backgroundColor: '#F5F5F5',
+    width: Dimensions.get('window').width * 0.9,
+    alignSelf: 'center',
   },
   imagemContainer: {
-    alignItems: 'center',
-    marginBottom: 8,
+    width: '100%',
+    height: 200,
+    marginBottom: 10,
   },
   imagemPeca: {
-    width: 100,
-    height: 100,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    borderRadius: 8,
   },
   pecaNome: {
-    fontSize: 16,
-    marginBottom: 8,
+    fontSize: 18,
     fontWeight: 'bold',
+    marginBottom: 5,
   },
   pecaValor: {
     fontSize: 16,
-    marginBottom: 8,
+    marginBottom: 5,
   },
   partesVeiculo: {
     fontSize: 14,
     color: '#888',
+    marginBottom: 10,
   },
   comprarButton: {
-    backgroundColor: '#5cc6ba',
-    borderRadius: 4,
+    backgroundColor: '#007AFF',
+    borderRadius: 8,
     paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     alignItems: 'center',
   },
   comprarButtonText: {
+    color: '#FFF',
     fontSize: 16,
-    color: '#fff',
+    fontWeight: 'bold',
   },
   noResultsText: {
     fontSize: 16,
-    textAlign: 'center',
-    marginTop: 32,
+    color: '#888',
   },
   voltarButton: {
-    backgroundColor: 'gray',
+    marginTop: 20,
+    backgroundColor: '#888',
     borderRadius: 8,
     paddingVertical: 8,
+    paddingHorizontal: 12,
     alignItems: 'center',
-    marginTop: 16,
   },
   voltarButtonText: {
-    color: '#fff',
+    color: '#FFF',
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });

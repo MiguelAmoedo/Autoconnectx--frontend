@@ -58,7 +58,7 @@ const CompraConfirmada = ({ route }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Compra confirmada!</Text>
       <Text style={styles.message}>Sua compra foi confirmada com sucesso.</Text>
-      <Text style={styles.idPeca}>ID da peça: {peca._id}</Text>
+      <Text style={styles.idPeca}>cod transação: {peca._id}</Text>
       <View style={styles.infoContainer}>
         <Text style={styles.info}>Entre em contato com o vendedor:</Text>
         <Text style={styles.info}>Nome: {vendedor.nome}</Text>

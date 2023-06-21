@@ -4,7 +4,6 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
-
 const Carrinho = () => {
   const navigation = useNavigation();
   const [carrinho, setCarrinho] = useState([]);
@@ -23,26 +22,6 @@ const Carrinho = () => {
     } catch (error) {
       console.error(error);
       Alert.alert('Erro', 'Carrinho de compras vazio.');
-    }
-  };
-
-  const removerItemCarrinho = async (itemId) => {
-    try {
-      const logIdCliente = await AsyncStorage.getItem('logIdCliente');
-
-      const response = await axios.delete(`http://10.0.2.2:5000/compras/carrinho/peca/${itemId}`, {
-        data: { clienteId: logIdCliente },
-      });
-
-      if (response.status === 200) {
-        Alert.alert('Sucesso', response.data.message);
-        getCarrinhoDoClienteLogado();
-      } else {
-        Alert.alert('Erro', response.data.message);
-      }
-    } catch (error) {
-      console.error(error);
-      Alert.alert('Erro', 'Ocorreu um erro ao remover o item do carrinho.');
     }
   };
 
@@ -76,7 +55,7 @@ const Carrinho = () => {
   const finalizarCompra = async () => {
     try {
       const logIdCliente = await AsyncStorage.getItem('logIdCliente');
-  
+
       const response = await axios.post(`http://10.0.2.2:5000/compras/finalizar/${logIdCliente}`);
       if (response.status === 200) {
         Alert.alert('Sucesso', response.data.message);
@@ -90,8 +69,21 @@ const Carrinho = () => {
       Alert.alert('Erro', 'Ocorreu um erro ao finalizar a compra.');
     }
   };
-  
-  
+
+  const removerItemCarrinho = async (itemId) => {
+    try {
+      const response = await axios.put(`http://10.0.2.2:5000/compras/gerenciar/${itemId}`, { quantidade: 0 });
+      if (response.status === 200) {
+        Alert.alert('Sucesso', 'Item removido do carrinho');
+        getCarrinhoDoClienteLogado(); // Atualiza o carrinho após remover o item
+      } else {
+        Alert.alert('Erro', response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Erro', 'Ocorreu um erro ao remover o item do carrinho.');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -104,7 +96,7 @@ const Carrinho = () => {
         <View style={styles.listContainer}>
           <FlatList
             data={carrinho.itens}
-            keyExtractor={item => item._id}
+            keyExtractor={(item) => item._id}
             renderItem={renderItem}
             contentContainerStyle={styles.list}
           />
