@@ -57,9 +57,6 @@ const App = () => {
         <Stack.Screen
           name="Cadastro"
           component={CadastroCliente}
-          options={({ navigation }) => ({
-            headerTitle: () => <Header title="AutoConnectX" navigation={navigation} />,
-          })}
         />
         <Stack.Screen
           name="CadastroVendedor"
@@ -157,10 +154,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: 300,
-    height: 300,
+    maxWidth: 300,
+    maxHeight: 130,
     alignItems: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
+    marginBottom: -20,
   },
   cartButton: {
     position: 'absolute',

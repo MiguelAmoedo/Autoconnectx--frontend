@@ -37,19 +37,24 @@ export default function ResultadoFiltro() {
     navigation.navigate('CompraPagina', { idPeca });
   };
 
-  const renderItem = ({ item }) => (
-    <View style={styles.pecaContainer}>
-      <View style={styles.imagemContainer}>
-        <Image source={{ uri: item.imagem }} style={styles.imagemPeca} />
+  const renderItem = ({ item }) => {
+    console.log('Nome da Imagem:', item.imagem);
+
+    return (
+      <View style={styles.pecaContainer}>
+        <View style={styles.imagemContainer}>
+          <Image source={{ uri: item.imagem }} style={styles.imagemPeca} />
+        </View>
+        <Text style={styles.pecaNome}>{item.nome}</Text>
+        <Text style={styles.pecaValor}>R$ {item.preco}</Text>
+        <Text style={styles.detalhesVeiculo}>Marca: {item.marca}</Text>
+        <Text style={styles.detalhesVeiculo}>Ano: {item.ano}</Text>
+        <TouchableOpacity style={styles.comprarButton} onPress={() => handleComprar(item._id)}>
+          <Text style={styles.comprarButtonText}>Comprar</Text>
+        </TouchableOpacity>
       </View>
-      <Text style={styles.pecaNome}>{item.nome}</Text>
-      <Text style={styles.pecaValor}>R$ {item.preco}</Text>
-      <Text style={styles.partesVeiculo}>{item.partesVeiculo}</Text>
-      <TouchableOpacity style={styles.comprarButton} onPress={() => handleComprar(item._id)}>
-        <Text style={styles.comprarButtonText}>Comprar</Text>
-      </TouchableOpacity>
-    </View>
-  );
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -72,7 +77,6 @@ export default function ResultadoFiltro() {
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -100,12 +104,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
     marginBottom: 10,
+    borderRadius: 8,
+    overflow: 'hidden',
   },
   imagemPeca: {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-    borderRadius: 8,
   },
   pecaNome: {
     fontSize: 18,
@@ -116,10 +121,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
   },
-  partesVeiculo: {
+  detalhesVeiculo: {
     fontSize: 14,
     color: '#888',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   comprarButton: {
     backgroundColor: '#007AFF',

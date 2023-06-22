@@ -17,7 +17,6 @@ const AdicionarPeca = () => {
   const [ano, setAno] = useState('');
   const [descricao, setDescricao] = useState('');
   const [preco, setPreco] = useState('');
-  const [qtdEstoque, setQtdEstoque] = useState('');
   const [status, setStatus] = useState('Disponivel');
   const [partesVeiculo, setPartesVeiculo] = useState('Motor e Componentes');
 
@@ -46,14 +45,14 @@ const AdicionarPeca = () => {
         },
         body: JSON.stringify({
           nome,
-          imagem,
+          imagem, // Add this line to include the "imagem" field
           tipoDePeca,
           marca,
           modelo,
           ano,
           descricao,
           preco,
-          qtdEstoque,
+          qtdEstoque: 1,
           status,
           partesVeiculo,
         }),
@@ -72,7 +71,6 @@ const AdicionarPeca = () => {
         setAno('');
         setDescricao('');
         setPreco('');
-        setQtdEstoque('');
         setStatus('Disponivel');
         setPartesVeiculo('Motor e Componentes');
       } else {
@@ -104,7 +102,7 @@ const AdicionarPeca = () => {
         const data = await response.json();
 
         if (response.ok) {
-          const { nome, tipoDePeca, imagem , marca, modelo, ano, descricao, preco, qtdEstoque, status, partesVeiculo } = data;
+          const { nome, tipoDePeca, imagem, marca, modelo, ano, descricao, preco, status, partesVeiculo } = data;
           setNome(nome);
           setTipoDePeca(tipoDePeca);
           setImagem(imagem);
@@ -113,7 +111,6 @@ const AdicionarPeca = () => {
           setAno(ano);
           setDescricao(descricao);
           setPreco(preco);
-          setQtdEstoque(qtdEstoque);
           setStatus(status);
           setPartesVeiculo(partesVeiculo);
         } else {
@@ -128,7 +125,7 @@ const AdicionarPeca = () => {
     if (id) {
       fetchPecaDetails();
     }
-  }, []);
+  }, [id]);
 
   return (
     <ScrollView>
@@ -140,7 +137,7 @@ const AdicionarPeca = () => {
         <Picker.Item label="Motor" value="Motor" />
         <Picker.Item label="Cabeçote" value="Cabeçote" />
         <Picker.Item label="Bloco do motor" value="Bloco do motor" />
-        <Picker.Item label="Rodas" value="Roda" />
+        <Picker.Item label="Rodas" value="Rodas" />
         <Picker.Item label="Bielas" value="Bielas" />
         <Picker.Item label="Pistões" value="Pistões" />
         <Picker.Item label="Anéis de pistão" value="Anéis de pistão" />
@@ -231,9 +228,6 @@ const AdicionarPeca = () => {
 
         <Text>Preço:</Text>
         <TextInput value={preco} onChangeText={setPreco} style={styles.input} />
-
-        <Text>Quantidade em Estoque:</Text>
-        <TextInput value={qtdEstoque} onChangeText={setQtdEstoque} style={styles.input} />
 
         <Text>Status:</Text>
       <Picker selectedValue={status} onValueChange={setStatus}>
