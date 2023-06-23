@@ -72,22 +72,24 @@ const Carrinho = () => {
 
   const removerItemCarrinho = async (itemId) => {
     try {
-      const response = await axios.put(`http://10.0.2.2:5000/compras/gerenciar/${itemId}`, { quantidade: 0 });
+      const logIdCliente = await AsyncStorage.getItem('logIdCliente')
+      const response = await axios.delete(`http://10.0.2.2:5000/compras/removerCarrinho/${logIdCliente}`);
       if (response.status === 200) {
         Alert.alert('Sucesso', 'Item removido do carrinho');
         getCarrinhoDoClienteLogado(); // Atualiza o carrinho após remover o item
       } else {
-        Alert.alert('Erro', response.data.message);
+        Alert.alert('Erro', response.data.mensagem);
       }
     } catch (error) {
       console.error(error);
       Alert.alert('Erro', 'Ocorreu um erro ao remover o item do carrinho.');
     }
   };
+  
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Carrinho de Compras</Text>
+      <Text style={styles.title}>Carrinho de Pedidos</Text>
       {carrinho.length === 0 ? (
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyText}>Seu carrinho está vazio</Text>
