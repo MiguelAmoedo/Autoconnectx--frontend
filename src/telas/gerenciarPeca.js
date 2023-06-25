@@ -21,7 +21,7 @@ const LerPecasVendedor = () => {
         return;
       }
 
-      const response = await fetch(`http://10.0.2.2:5000/vendedores/pecas/${vendedorId}`, {
+      const response = await fetch(`https://backend1-swart.vercel.app/vendedores/pecas/${vendedorId}`, {
         headers: {
           Authorization: authToken,
         },
@@ -68,7 +68,7 @@ const LerPecasVendedor = () => {
         return;
       }
 
-      const response = await fetch(`http://10.0.2.2:5000/vendedores/pecas/${id}`, {
+      const response = await fetch(`https://backend1-swart.vercel.app/vendedores/pecas/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: authToken,

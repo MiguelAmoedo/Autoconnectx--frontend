@@ -29,7 +29,7 @@ const AdicionarPeca = () => {
         return;
       }
 
-      let url = 'http://10.0.2.2:5000/vendedores/pecas';
+      let url = 'https://backend1-swart.vercel.app/vendedores/pecas';
       let method = 'POST';
 
       if (id) {
@@ -93,7 +93,7 @@ const AdicionarPeca = () => {
           return;
         }
 
-        const response = await fetch(`http://10.0.2.2:5000/vendedores/pecas/${id}`, {
+        const response = await fetch(`https://backend1-swart.vercel.app/vendedores/pecas/${id}`, {
           headers: {
             Authorization: authToken,
           },

@@ -7,23 +7,24 @@ import { useNavigation } from '@react-navigation/native';
 const Carrinho = () => {
   const navigation = useNavigation();
   const [carrinho, setCarrinho] = useState([]);
+  const [atualizarCarrinho, setAtualizarCarrinho] = useState(false);
 
   useEffect(() => {
     getCarrinhoDoClienteLogado();
     retrieveLogIdCliente();
-  }, []);
+  }, [atualizarCarrinho]);
 
   const getCarrinhoDoClienteLogado = async () => {
     try {
       const logIdCliente = await AsyncStorage.getItem('logIdCliente');
-
-      const response = await axios.get(`http://10.0.2.2:5000/compras/carrinhoget/${logIdCliente}`);
+  
+      const response = await axios.get(`https://backend1-swart.vercel.app/compras/carrinhoget/${logIdCliente}`);
       setCarrinho(response.data);
     } catch (error) {
-      console.error(error);
-      Alert.alert('Erro', 'Carrinho de compras vazio.');
+      Alert.alert('Atenção', 'Carrinho de compras vazio.');
     }
   };
+  
 
   const retrieveLogIdCliente = async () => {
     try {
@@ -46,7 +47,7 @@ const Carrinho = () => {
     <View style={styles.itemContainer}>
       <Text style={styles.nome}>{item.peca.nome}</Text>
       <Text style={styles.preco}>Preço: R$ {item.peca.preco.toFixed(2)}</Text>
-      <TouchableOpacity style={styles.removerButton} onPress={() => removerItemCarrinho(item._id)}>
+      <TouchableOpacity style={styles.removerButton} onPress={() => removerItemCarrinho(item.peca._id)}>
         <Text style={styles.removerButtonText}>Remover</Text>
       </TouchableOpacity>
     </View>
@@ -56,7 +57,7 @@ const Carrinho = () => {
     try {
       const logIdCliente = await AsyncStorage.getItem('logIdCliente');
 
-      const response = await axios.post(`http://10.0.2.2:5000/compras/finalizar/${logIdCliente}`);
+      const response = await axios.post(`https://backend1-swart.vercel.app/compras/finalizar/${logIdCliente}`);
       if (response.status === 200) {
         Alert.alert('Sucesso', response.data.message);
         const pecaId = carrinho.itens[0].peca._id; // Obtém o ID da primeira peça no carrinho
@@ -72,11 +73,10 @@ const Carrinho = () => {
 
   const removerItemCarrinho = async (itemId) => {
     try {
-      const logIdCliente = await AsyncStorage.getItem('logIdCliente')
-      const response = await axios.delete(`http://10.0.2.2:5000/compras/removerCarrinho/${logIdCliente}`);
+      const response = await axios.delete(`https://backend1-swart.vercel.app/compras/ola/${carrinho._id}`);
       if (response.status === 200) {
         Alert.alert('Sucesso', 'Item removido do carrinho');
-        getCarrinhoDoClienteLogado(); // Atualiza o carrinho após remover o item
+        setAtualizarCarrinho(true); // Atualiza a variável de estado para acionar o useEffect
       } else {
         Alert.alert('Erro', response.data.mensagem);
       }

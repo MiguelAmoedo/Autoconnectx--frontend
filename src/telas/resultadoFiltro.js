@@ -11,7 +11,7 @@ export default function ResultadoFiltro() {
 
   const buscarPecas = async () => {
     try {
-      const response = await fetch(`http://10.0.2.2:5000/pecas/pesquisa?marca=${marca}&modelo=${modelo}&ano=${ano}`, {
+      const response = await fetch(`https://backend1-swart.vercel.app/pecas/pesquisa?marca=${marca}&modelo=${modelo}&ano=${ano}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -58,7 +58,7 @@ export default function ResultadoFiltro() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerTitle}>Resultado do Filtro</Text>
+      <Text style={styles.headerTitle}>Peças compativeis</Text>
 
       {pecas.length > 0 ? (
         <FlatList
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   comprarButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#000000',
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 12,

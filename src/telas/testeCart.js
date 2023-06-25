@@ -13,7 +13,7 @@ const AddToCartScreen = () => {
       quantidade
     };
 
-    fetch('http://10.0.2.2:5000/compras/carrinho', {
+    fetch('https://backend1-swart.vercel.app/compras/carrinho', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

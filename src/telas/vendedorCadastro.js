@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
-import Logo from '../components/logo';
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, Image } from 'react-native';
+import logo from '../assets/vendedor.png';
 
 const CadastroVendedor = ({ navigation }) => {
   const [nome, setNome] = useState('');
@@ -13,7 +13,7 @@ const CadastroVendedor = ({ navigation }) => {
   const handleCadastro = async () => {
     try {
       // Realizar a chamada à API do backend para cadastrar o vendedor
-      const response = await fetch('http://10.0.2.2:5000/login/vendedor/cadastro', {
+      const response = await fetch('https://backend1-swart.vercel.app/login/vendedor/cadastro', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,8 +47,8 @@ const CadastroVendedor = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-     
-      <Text style={styles.title}>Cadastro de Vendedor</Text>
+      
+      <Image source={logo} style={styles.vendedor}/>
       <TextInput
         style={styles.input}
         placeholder="Nome"
@@ -86,17 +86,16 @@ const CadastroVendedor = ({ navigation }) => {
         value={telefone}
         onChangeText={(text) => setTelefone(text)}
       />
-      <Button
-        title="Cadastrar"
-        onPress={handleCadastro}
-        color="#5cc6ba"
-      />
+
+      <TouchableOpacity style={styles.button} onPress={handleCadastro}>
+        <Text style={styles.buttonText}>Cadastrar</Text>
+      </TouchableOpacity>
+
       <View style={styles.loginButtonContainer}>
-        <Button
-          title="Já tem conta? Faça login"
-          onPress={() => navigation.navigate('LoginVendedor')}
-          color="#5cc6ba"
-        />
+
+        <TouchableOpacity onPress={() => navigation.navigate('LoginVendedor')}>
+        <Text style={styles.signupText}>Já tem conta? Faça login</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -108,6 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
+    backgroundColor: 'ghostwhite',
   },
   logo: {
     height: 150,
@@ -123,18 +123,42 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 40,
     borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 31,
+    borderColor: 'rgb(220,220,220)',
+    borderRadius: 10,
     marginBottom: 10,
     paddingHorizontal: 10,
     textAlign: 'center',
+    top: -50,
   },
+  button: {
+    backgroundColor: '#000000',
+    padding: 10,
+    alignItems: 'center',
+    borderRadius: 10,
+    top: -35,
+    },
+    
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+   },
   loginButtonContainer: {
-    position: 'absolute',
-    bottom: 20,
+    bottom: -100,
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+  },
+  signupText: {
+    color: '#A0A0A0',
+    marginTop: 10,
+    top: -100,
+  },
+  vendedor: {
+    height: 150,
+    width: 105,
+    top: -40 ,
   },
 });
 

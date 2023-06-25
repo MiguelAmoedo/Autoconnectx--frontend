@@ -12,7 +12,7 @@ const Compras = ({ route }) => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    fetch(`http://10.0.2.2:5000/pecas/${idPeca}`, {
+    fetch(`https://backend1-swart.vercel.app/pecas/${idPeca}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -24,7 +24,7 @@ const Compras = ({ route }) => {
 
   useEffect(() => {
     if (peca && peca.idVendedor) {
-      fetch(`http://10.0.2.2:5000/vendedores/${peca.idVendedor}`, {
+      fetch(`https://backend1-swart.vercel.app/vendedores/${peca.idVendedor}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -51,7 +51,7 @@ const Compras = ({ route }) => {
 
       console.log('Dados:', dados);
 
-      const response = await axios.post('http://10.0.2.2:5000/compras/carrinho', dados);
+      const response = await axios.post('https://backend1-swart.vercel.app/compras/carrinho', dados);
 
       console.log('Resposta:', response.data);
 
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   carrinhoButton: {
-    backgroundColor: '#5cc6ba',
+    backgroundColor: '#00000',
     padding: 10,
     borderRadius: 8,
     marginBottom: 10,

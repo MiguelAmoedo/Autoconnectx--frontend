@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, Image } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Logo from '../components/logo';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import Logo from '../components/logo';
+import logo from '../assets/cliente.png';
 
 const Cadastro = ({ navigation }) => {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [confirmarSenha, setConfirmarSenha] = useState('');
   const [cpf, setCpf] = useState('');
   const [endereco, setEndereco] = useState('');
   const [telefone, setTelefone] = useState('');
 
   const handleCadastro = async () => {
+    if (senha !== confirmarSenha) {
+      Alert.alert('Erro', 'As senhas não coincidem');
+      return;
+    }
     try {
       // Realizar a chamada à API do backend para cadastrar o cliente
-      const response = await fetch('http://10.0.2.2:5000/login/cliente/cadastro', {
+      const response = await fetch('https://backend1-swart.vercel.app/login/cliente/cadastro', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -23,9 +29,9 @@ const Cadastro = ({ navigation }) => {
           nome,
           email,
           senha,
-          cpf,
           endereco,
           telefone,
+          cpf
         }),
       });
 
@@ -48,10 +54,10 @@ const Cadastro = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.logoContainer}>
+      {/* <View style={styles.logoContainer}>
         
-      </View>
-      <Text style={styles.title}>Cadastro de Cliente</Text>
+      </View> */}
+      <Image source={logo} style={styles.cliente}/>
       <TextInput
         style={styles.input}
         placeholder="Nome"
@@ -64,7 +70,25 @@ const Cadastro = ({ navigation }) => {
         value={email}
         onChangeText={(text) => setEmail(text)}
       />
+       <TextInput
+        style={styles.input}
+        placeholder="Endereço"
+        value={endereco}
+        onChangeText={(text) => setEndereco(text)}
+      />
+       <TextInput
+        style={styles.input}
+        placeholder="Telefone"
+        value={telefone}
+        onChangeText={(text) => setTelefone(text)}
+      />
       <TextInput
+        style={styles.input}
+        placeholder="CPF"
+        value={cpf}
+        onChangeText={(text) => setCpf(text)}
+      />
+       <TextInput
         style={styles.input}
         placeholder="Senha"
         secureTextEntry={true}
@@ -73,21 +97,10 @@ const Cadastro = ({ navigation }) => {
       />
       <TextInput
         style={styles.input}
-        placeholder="CPF"
-        value={cpf}
-        onChangeText={(text) => setCpf(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Endereço"
-        value={endereco}
-        onChangeText={(text) => setEndereco(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Telefone"
-        value={telefone}
-        onChangeText={(text) => setTelefone(text)}
+        placeholder="Confirmar Senha"
+        secureTextEntry={true}
+        value={confirmarSenha}
+        onChangeText={(text) => setConfirmarSenha(text)}
       />
       <TouchableOpacity style={styles.button} onPress={handleCadastro}>
         <Text style={styles.buttonText}>Cadastrar</Text>
@@ -100,10 +113,17 @@ const Cadastro = ({ navigation }) => {
 };
 
     const styles = StyleSheet.create({
+      title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 10,
+      },
       container: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+      fontWeight: 'bold',
+      backgroundColor: 'ghostwhite',
       },
       label: {
       fontSize: 16,
@@ -114,21 +134,39 @@ const Cadastro = ({ navigation }) => {
       height: 40,
       width: '80%',
       borderWidth: 1,
-      borderColor: 'gray',
+      borderColor: 'rgb(220,220,220)',
+      borderRadius: 10,
       marginBottom: 20,
       paddingHorizontal: 10,
+      top: -25,
+      textAlign: 'center',
       },
       button: {
-      backgroundColor: '#5cc6ba',
+      backgroundColor: '#000000',
       padding: 10,
       alignItems: 'center',
-      borderRadius: 5,
+      borderRadius: 10,
       },
+      
       buttonText: {
       color: 'white',
       fontSize: 16,
       fontWeight: 'bold',
       },
+      
+
+      loginText: {
+        fontSize: 13,
+        color: '#999',
+        marginBottom: 10,
+        top: 16,  
+      },
+      cliente: {
+        height: 120,
+        width: 120,
+        top: -40 ,
+      }
+      
       });
 
 export default Cadastro;

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Picker } from '@react-native-picker/picker'; // Importar o componente Picker
+import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Logo from '../components/logo';
 
 export default function Filtro() {
   const navigation = useNavigation();
@@ -15,7 +16,6 @@ export default function Filtro() {
   const [anoError, setAnoError] = useState(false);
 
   useEffect(() => {
-    // Função para buscar o token armazenado no AsyncStorage
     const getToken = async () => {
       try {
         const storedToken = await AsyncStorage.getItem('authToken');
@@ -27,12 +27,10 @@ export default function Filtro() {
       }
     };
 
-    // Chame a função para buscar o token ao iniciar o componente
     getToken();
   }, []);
 
   const handleSelectPiece = () => {
-    // Validação dos campos em tempo real
     if (!marca) {
       setMarcaError(true);
       return;
@@ -93,7 +91,7 @@ export default function Filtro() {
         style={[styles.input, anoError && styles.inputError]}
         value={ano}
         onChangeText={(text) => setAno(text)}
-        keyboardType="numeric" // Define o teclado para exibir apenas números
+        keyboardType="numeric"
       />
 
       <TouchableOpacity style={styles.button} onPress={handleSelectPiece}>
@@ -108,41 +106,43 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   label: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: 10,
+    alignSelf: 'flex-start',
   },
   input: {
+    width: '100%',
     height: 40,
-    width: '80%',
+    borderRadius: 4,
     borderWidth: 1,
-    borderColor: 'gray',
-    marginBottom: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 1,
+    borderColor: '#ccc',
+    marginBottom: 16,
+    paddingHorizontal: 5,
   },
   inputError: {
     borderColor: 'red',
   },
   picker: {
-    height: 20,
-    width: '110%',
-    marginVertical: -9,
-    marginHorizontal: -13,
-  },
-  Picker: {
-    fontWeight: 'bold'
+    height: 40,
+    color: '#000',
+    paddingVertical: -30,
+    marginVertical: -8,
+    marginHorizontal: -10
   },
   button: {
-    backgroundColor: 'blue',
-    padding: 10,
+    width: '100%',
+    height: 40,
+    justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 5,
+    backgroundColor: '#000000',
+    borderRadius: 4,
   },
   buttonText: {
-    color: 'white',
+    color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },

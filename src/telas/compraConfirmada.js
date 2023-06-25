@@ -15,7 +15,7 @@ const CompraConfirmada = ({ route }) => {
 
   const fetchPeca = async () => {
     try {
-      const response = await axios.get(`http://10.0.2.2:5000/pecas/${pecaId}`);
+      const response = await axios.get(`https://backend1-swart.vercel.app/pecas/${pecaId}`);
       setPeca(response.data);
 
       const vendedorId = response.data?.idVendedor;
@@ -29,7 +29,7 @@ const CompraConfirmada = ({ route }) => {
 
   const fetchVendedor = async (vendedorId) => {
     try {
-      const response = await axios.get(`http://10.0.2.2:5000/vendedores/${vendedorId}`);
+      const response = await axios.get(`https://backend1-swart.vercel.app/vendedores/${vendedorId}`);
       setVendedor(response.data);
     } catch (error) {
       console.error(error);
@@ -56,8 +56,8 @@ const CompraConfirmada = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Compra confirmada!</Text>
-      <Text style={styles.message}>Sua compra foi confirmada com sucesso.</Text>
+      <Text style={styles.title}>Pedido confirmado!</Text>
+      <Text style={styles.message}>Seu pedido foi confirmado com sucesso.</Text>
       <Text style={styles.idPeca}>cod transação: {peca._id}</Text>
       <View style={styles.infoContainer}>
         <Text style={styles.info}>Entre em contato com o vendedor:</Text>

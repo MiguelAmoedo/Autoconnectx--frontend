@@ -11,7 +11,7 @@ const Login = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       // Realizar a chamada à API do backend para fazer o login do cliente
-      const response = await fetch('http://10.0.2.2:5000/login/cliente', {
+      const response = await fetch('https://backend1-swart.vercel.app/login/cliente', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -113,17 +113,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: 'ghostwhite',
     marginBottom: 0,
-    paddingBottom: 250
+    paddingBottom: -200,
+    paddingVertical: -100
   },
   logoContainer: {
     marginBottom: -16,
   },
   logo: {
     width: 350,
-    height: 350,
-    marginBottom: 20
+    height: 330,
+    marginBottom: 7,
+    top: 20,
   },
   title: {
     fontSize: 24,
@@ -135,12 +137,12 @@ const styles = StyleSheet.create({
     height: 40,
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 8,
+    borderRadius: 10,
     marginBottom: 16,
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: '#5cc6ba',
+    backgroundColor: '#000000',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
@@ -153,16 +155,18 @@ const styles = StyleSheet.create({
   },
   createAccountText: {
     fontSize: 16,
+    
   },
   createSellerAccountButton: {
     marginTop: 32,
     marginBottom: -10,
-    marginVertical: -100
+    marginVertical: -100,
+   
    
   },
   createSellerAccountText: {
     fontSize: 16,
-    color: '#999',
+    color: 'gray',
     marginBottom: -10,
     
    

@@ -10,7 +10,7 @@ const LoginVendedor = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://10.0.2.2:5000/login/vendedor', {
+      const response = await fetch('https://backend1-swart.vercel.app/login/vendedor', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
+    backgroundColor: 'ghostwhite',
   },
   logoContainer: {
     top: 0,
@@ -88,8 +89,12 @@ const styles = StyleSheet.create({
     marginTop: -200
   },
   logo: {
-    width: 246,
-    height: 246,
+    width: 350,
+    height: 350,
+    marginBottom: 20
+  },
+  title: {
+    top: -100,
   },
   label: {
     marginBottom: 0,
@@ -98,23 +103,24 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 40,
     borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 31,
+    borderColor: 'lightgray',
+    borderRadius: 10,
     marginBottom: 10,
     paddingHorizontal: 10,
     textAlign: 'center',
+    top: -60,
   },
   button: {
-    width: '100%',
+    width: '40%',
     height: 40,
-    borderRadius: 31,
-    backgroundColor: '#5cc6ba',
+    borderRadius: 10,
+    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
   },
