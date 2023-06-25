@@ -18,7 +18,7 @@ import CompraPagina from './src/telas/compra';
 import Carrinho from './src/telas/carrinhoScreen';
 import AddToCartScreen from './src/telas/testeCart';
 import CompraConfirmada from './src/telas/compraConfirmada';
-import Logo from './src/assets/logo.png';
+import Logo from './src/assets/logo1.png';
 
 const Stack = createStackNavigator();
 
