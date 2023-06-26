@@ -79,6 +79,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
+    paddingBottom: -10,
+    marginBottom: -150,
     backgroundColor: 'ghostwhite',
   },
   logoContainer: {
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   input: {
-    width: '100%',
+    width: '80%',
     height: 40,
     borderWidth: 1,
     borderColor: 'lightgray',
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: -50,
   },
   buttonText: {
     color: 'white',

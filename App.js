@@ -42,9 +42,11 @@ const App = () => {
         initialRouteName="Login"
         screenOptions={{
           headerStyle: {
+            
             backgroundColor: '#fff', // Defina a cor de fundo desejada para a barra superior
           },
           headerTintColor: '#000', // Defina a cor do texto e dos ícones da barra superior
+          
         }}
       >
         <Stack.Screen
@@ -65,6 +67,9 @@ const App = () => {
         <Stack.Screen
           name="Login"
           component={LoginCliente}
+          options={{
+            headerShown: false, // Remover o header
+          }}
         />
         <Stack.Screen
           name="LoginVendedor"
@@ -73,9 +78,6 @@ const App = () => {
         <Stack.Screen
           name="Filtro"
           component={Filtro}
-          options={({ navigation }) => ({
-            headerTitle: () => <Header title="AutoConnectX" navigation={navigation} />,
-          })}
         />
         <Stack.Screen
           name="VendorControlScreen"

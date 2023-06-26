@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'ghostwhite',
     marginBottom: 0,
     paddingBottom: -200,
-    paddingVertical: -100
+    paddingVertical: 100
   },
   logoContainer: {
     marginBottom: -16,
@@ -155,12 +155,14 @@ const styles = StyleSheet.create({
   },
   createAccountText: {
     fontSize: 16,
+    marginBottom: 50,
+    
     
   },
   createSellerAccountButton: {
     marginTop: 32,
-    marginBottom: -10,
-    marginVertical: -100,
+    marginBottom: 10,
+    marginVertical: -50,
    
    
   },

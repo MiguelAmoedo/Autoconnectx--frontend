@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   carrinhoButton: {
-    backgroundColor: '#00000',
+    backgroundColor: '#000',
     padding: 10,
     borderRadius: 8,
     marginBottom: 10,

@@ -49,6 +49,7 @@ export default function ResultadoFiltro() {
         <Text style={styles.pecaValor}>R$ {item.preco}</Text>
         <Text style={styles.detalhesVeiculo}>Marca: {item.marca}</Text>
         <Text style={styles.detalhesVeiculo}>Ano: {item.ano}</Text>
+        <Text style={styles.detalhesVeiculo}>Parte: {item.partesVeiculo}</Text>
         <TouchableOpacity style={styles.comprarButton} onPress={() => handleComprar(item._id)}>
           <Text style={styles.comprarButtonText}>Clique aqui</Text>
         </TouchableOpacity>

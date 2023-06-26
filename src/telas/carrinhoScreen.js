@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, Button } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, Button, Image } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -47,6 +47,9 @@ const Carrinho = () => {
     <View style={styles.itemContainer}>
       <Text style={styles.nome}>{item.peca.nome}</Text>
       <Text style={styles.preco}>Preço: R$ {item.peca.preco.toFixed(2)}</Text>
+      {item.peca.imagem && (
+        <Image source={{ uri: item.peca.imagem }} style={styles.imagem} resizeMode="contain" />
+      )}
       <TouchableOpacity style={styles.removerButton} onPress={() => removerItemCarrinho(item.peca._id)}>
         <Text style={styles.removerButtonText}>Remover</Text>
       </TouchableOpacity>
@@ -160,6 +163,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  imagem: {
+    width: '100%',
+    height: 200,
+    marginBottom: 10,
   },
 });
 

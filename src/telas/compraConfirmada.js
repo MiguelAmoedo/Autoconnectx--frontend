@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Linking, Image, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 import Clipboard from '@react-native-clipboard/clipboard';
 
@@ -8,6 +8,7 @@ const CompraConfirmada = ({ route }) => {
   const [peca, setPeca] = useState(null);
   const [vendedor, setVendedor] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchPeca();
@@ -23,7 +24,10 @@ const CompraConfirmada = ({ route }) => {
         fetchVendedor(vendedorId);
       }
     } catch (error) {
+      setError('Falha ao carregar a peça. Por favor, tente novamente mais tarde.');
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -32,24 +36,25 @@ const CompraConfirmada = ({ route }) => {
       const response = await axios.get(`https://backend1-swart.vercel.app/vendedores/${vendedorId}`);
       setVendedor(response.data);
     } catch (error) {
+      setError('Falha ao carregar o vendedor. Por favor, tente novamente mais tarde.');
       console.error(error);
-    } finally {
-      setLoading(false);
     }
   };
 
   if (loading) {
     return (
       <View style={styles.container}>
+        <ActivityIndicator size="large" color="#128C7E" />
         <Text style={styles.message}>Carregando...</Text>
       </View>
     );
   }
 
-  if (!peca || !vendedor) {
+  if (error || !peca || !vendedor) {
     return (
       <View style={styles.container}>
         <Text style={styles.message}>Não foi possível carregar os dados da compra.</Text>
+        {error && <Text style={styles.error}>{error}</Text>}
       </View>
     );
   }
@@ -59,6 +64,7 @@ const CompraConfirmada = ({ route }) => {
       <Text style={styles.title}>Pedido confirmado!</Text>
       <Text style={styles.message}>Seu pedido foi confirmado com sucesso.</Text>
       <Text style={styles.idPeca}>cod transação: {peca._id}</Text>
+      <Image source={{ uri: peca.imagem }} style={styles.image} />
       <View style={styles.infoContainer}>
         <Text style={styles.info}>Entre em contato com o vendedor:</Text>
         <Text style={styles.info}>Nome: {vendedor.nome}</Text>
@@ -103,6 +109,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#616161',
   },
+  image: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
+  },
   infoContainer: {
     marginTop: 20,
     alignItems: 'center',
@@ -127,7 +138,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  error: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: 'red',
+  },
 });
 
 export default CompraConfirmada;
-
