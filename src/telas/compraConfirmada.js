@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking, Image, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Linking, Image, ActivityIndicator, ScrollView } from 'react-native';
 import axios from 'axios';
 import Clipboard from '@react-native-clipboard/clipboard';
 
@@ -60,83 +60,147 @@ const CompraConfirmada = ({ route }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Pedido confirmado!</Text>
-      <Text style={styles.message}>Seu pedido foi confirmado com sucesso.</Text>
-      <Text style={styles.idPeca}>cod transação: {peca._id}</Text>
-      <Image source={{ uri: peca.imagem }} style={styles.image} />
+    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+  
+      <Text style={styles.title}>Pedido Confirmado!</Text>
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: peca.imagem }} style={styles.image} />
+      </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.info}>Entre em contato com o vendedor:</Text>
-        <Text style={styles.info}>Nome: {vendedor.nome}</Text>
-        <Text style={styles.info}>Telefone: {vendedor.telefone}</Text>
+        <Text style={styles.info}>Código de Transação:</Text>
+        <Text style={styles.idPeca}>{peca._id}</Text>
       </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() =>
-            Linking.openURL(`https://wa.me/${vendedor.telefone}?text=Olá, tenho interesse na peça: ${peca.nome}`)
-          }
-        >
-          <Text style={styles.buttonText}>Entrar em contato via WhatsApp</Text>
-        </TouchableOpacity>
+      <View style={styles.infoContainer}>
+        <Text style={styles.info}>Peça:</Text>
+        <Text style={styles.pecaNome}>{peca.nome}</Text>
       </View>
-    </View>
+      <View style={styles.vendedorContainer}>
+        <Text style={styles.info}>Vendedor:</Text>
+        <Text style={styles.vendedorNome}>{vendedor.nome}</Text>
+      </View>
+      <View style={styles.vendedorContainer}>
+        <Text style={styles.info}>Telefone:</Text>
+        <Text style={styles.vendedorTelefone}>{vendedor.telefone}</Text>
+      </View>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() =>
+          Linking.openURL(`https://wa.me/${vendedor.telefone}?text=Olá, tenho interesse na peça: ${peca.nome}`)
+        }
+      >
+        <Text style={styles.buttonText}>Entrar em contato via WhatsApp</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  scrollViewContent: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F7F7F7',
     paddingHorizontal: 20,
+    paddingVertical: 40,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
     color: '#292929',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4,
   },
-  message: {
+  alertText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
+    color: '#FF0000',
+  },
+  infoText: {
     fontSize: 16,
     textAlign: 'center',
-    marginBottom: 20,
-    color: '#616161',
-  },
-  idPeca: {
-    fontSize: 16,
     marginBottom: 10,
     color: '#616161',
+    fontWeight: "bold"
+  },
+  imageContainer: {
+    marginBottom: 20,
+    borderRadius: 10,
+    overflow: 'hidden',
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
   image: {
     width: 200,
     height: 200,
-    marginBottom: 20,
   },
   infoContainer: {
     marginTop: 20,
     alignItems: 'center',
   },
   info: {
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
     color: '#616161',
   },
-  buttonContainer: {
-    marginTop: 20,
+  pecaNome: {
+    fontSize: 16,
+    marginBottom: 20,
+    color: '#128C7E',
+    textAlign: 'center',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  vendedorContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  vendedorNome: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginRight: 5,
+    color: '#128C7E',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  vendedorTelefone: {
+    fontSize: 16,
+    color: '#616161',
   },
   button: {
     backgroundColor: '#128C7E',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
+    marginTop: 20,
   },
   buttonText: {
     color: '#FFF',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F7F7F7',
+  },
+  message: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#616161',
   },
   error: {
     fontSize: 16,

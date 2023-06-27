@@ -69,6 +69,10 @@ const Compras = ({ route }) => {
   const handleNavigateToCarrinho = () => {
     navigation.navigate('Carrinho');
   };
+  Alert.alert(
+    'O AutoConnectX apenas intermedia a venda de peças! ',
+    '  Oferecemos informações sobre onde você pode comprá-las. A seguir, forneceremos os contatos dos vendedores das peças. Cuidado com golpes e Fraudes'
+  );
 
   const retrieveLogIdCliente = async () => {
     try {
