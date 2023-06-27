@@ -18,12 +18,10 @@ export default function ResultadoFiltro() {
       });
       const data = await response.json();
 
-      // Verifica se há peças correspondentes aos filtros
-      if (Array.isArray(data.result) && data.result.length > 0) {
-        setPecas(data.result);
-      } else {
-        setPecas([]);
-      }
+      // Filtrar peças vendidas ou com estoque zero ou negativo
+      const pecasFiltradas = data.result.filter((peca) => peca.status !== 'Vendida' && peca.qtdEstoque > 0);
+
+      setPecas(pecasFiltradas);
     } catch (error) {
       console.error(error);
     }
@@ -36,10 +34,9 @@ export default function ResultadoFiltro() {
   const handleComprar = (idPeca) => {
     navigation.navigate('CompraPagina', { idPeca });
   };
+  
 
   const renderItem = ({ item }) => {
-    console.log('Nome da Imagem:', item.imagem);
-
     return (
       <View style={styles.pecaContainer}>
         <View style={styles.imagemContainer}>
@@ -59,7 +56,7 @@ export default function ResultadoFiltro() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerTitle}>Peças compativeis</Text>
+      <Text style={styles.headerTitle}>Peças Selecionadas</Text>
 
       {pecas.length > 0 ? (
         <FlatList

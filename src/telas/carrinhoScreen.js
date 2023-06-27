@@ -17,14 +17,13 @@ const Carrinho = () => {
   const getCarrinhoDoClienteLogado = async () => {
     try {
       const logIdCliente = await AsyncStorage.getItem('logIdCliente');
-  
+
       const response = await axios.get(`https://backend1-swart.vercel.app/compras/carrinhoget/${logIdCliente}`);
       setCarrinho(response.data);
     } catch (error) {
       Alert.alert('Atenção', 'Carrinho de compras vazio.');
     }
   };
-  
 
   const retrieveLogIdCliente = async () => {
     try {
@@ -65,6 +64,8 @@ const Carrinho = () => {
         Alert.alert('Sucesso', response.data.message);
         const pecaId = carrinho.itens[0].peca._id; // Obtém o ID da primeira peça no carrinho
         navigation.navigate('CompraConfirmada', { pecaId }); // Redireciona para a tela "CompraConfirmada" com o parâmetro pecaId
+        setAtualizarCarrinho(true); // Atualiza a variável de estado para acionar o useEffect
+        setCarrinho([]); // Zera o carrinho
       } else {
         Alert.alert('Erro', response.data.message);
       }
@@ -80,6 +81,7 @@ const Carrinho = () => {
       if (response.status === 200) {
         Alert.alert('Sucesso', 'Item removido do carrinho');
         setAtualizarCarrinho(true); // Atualiza a variável de estado para acionar o useEffect
+        setCarrinho([]); // Zera o carrinho
       } else {
         Alert.alert('Erro', response.data.mensagem);
       }
@@ -88,7 +90,6 @@ const Carrinho = () => {
       Alert.alert('Erro', 'Ocorreu um erro ao remover o item do carrinho.');
     }
   };
-  
 
   return (
     <View style={styles.container}>
@@ -105,7 +106,7 @@ const Carrinho = () => {
             renderItem={renderItem}
             contentContainerStyle={styles.list}
           />
-          <Button title="Finalizar Compra" onPress={finalizarCompra} />
+          <Button title="Finalizar Pedido" onPress={finalizarCompra} />
         </View>
       )}
     </View>
