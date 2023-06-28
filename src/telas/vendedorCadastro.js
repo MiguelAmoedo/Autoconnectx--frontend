@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   logo: {
     height: 150,
     width: 140,
-    marginBottom: 20,
+    
   },
   title: {
     fontSize: 20,
@@ -128,14 +128,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
     textAlign: 'center',
-    top: -50,
+    top: -10,
   },
   button: {
     backgroundColor: '#000000',
     padding: 10,
     alignItems: 'center',
     borderRadius: 10,
-    top: -35,
+    top: -0,
     },
     
   buttonText: {

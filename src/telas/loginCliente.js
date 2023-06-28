@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'ghostwhite',
     marginBottom: 0,
     paddingBottom: -200,
-    paddingVertical: 100
+    paddingVertical: 100,
   },
   logoContainer: {
     marginBottom: -16,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     width: 350,
     height: 330,
     marginBottom: 7,
-    top: 20,
+    top: 0,
   },
   title: {
     fontSize: 24,
@@ -140,6 +140,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 16,
     paddingHorizontal: 10,
+    top: -40
+    
   },
   button: {
     backgroundColor: '#000000',
@@ -147,15 +149,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderRadius: 8,
     marginBottom: 16,
+    top: -40
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
     textAlign: 'center',
+    
   },
   createAccountText: {
     fontSize: 16,
     marginBottom: 50,
+    top: -40
     
     
   },

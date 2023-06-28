@@ -18,7 +18,8 @@ import CompraPagina from './src/telas/compra';
 import Carrinho from './src/telas/carrinhoScreen';
 import AddToCartScreen from './src/telas/testeCart';
 import CompraConfirmada from './src/telas/compraConfirmada';
-import Logo from './src/assets/logo1.png';
+import PecasVendidas from './src/telas/pecasVendidas';
+import Logo from './src/assets/aclogo.png';
 
 const Stack = createStackNavigator();
 
@@ -39,11 +40,11 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="Home"
         screenOptions={{
           headerStyle: {
             
-            backgroundColor: '#fff', // Defina a cor de fundo desejada para a barra superior
+            backgroundColor: 'ghostwhite', // Defina a cor de fundo desejada para a barra superior
           },
           headerTintColor: '#000', // Defina a cor do texto e dos ícones da barra superior
           
@@ -52,17 +53,23 @@ const App = () => {
         <Stack.Screen
           name="Home"
           component={Home}
-          options={({ navigation }) => ({
-            headerTitle: () => <Header title="AutoConnectX" navigation={navigation} />,
-          })}
+          options={{
+            headerShown: false, // Remover o header
+          }}
         />
         <Stack.Screen
           name="Cadastro"
           component={CadastroCliente}
+          options={{
+            headerShown: false, // Remover o header
+          }}
         />
         <Stack.Screen
           name="CadastroVendedor"
           component={CadastroVendedor}
+          options={{
+            headerShown: false, // Remover o header
+          }}
         />
         <Stack.Screen
           name="Login"
@@ -74,10 +81,14 @@ const App = () => {
         <Stack.Screen
           name="LoginVendedor"
           component={LoginVendedorScreen}
+        
         />
         <Stack.Screen
           name="Filtro"
           component={Filtro}
+          options={({ navigation }) => ({
+            headerTitle: () => <Header title="AutoConnectX" navigation={navigation} />,
+          })}
         />
         <Stack.Screen
           name="VendorControlScreen"
@@ -135,7 +146,13 @@ const App = () => {
             headerTitle: () => <Header title="AutoConnectX" navigation={navigation} />,
           })}
         />
-        
+        <Stack.Screen
+          name="PecasVendidas"
+          component={PecasVendidas}
+          options={({ navigation }) => ({
+            headerTitle: () => <Header title="AutoConnectX" navigation={navigation} />,
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -149,18 +166,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 130,
     paddingVertical: 10,
-    paddingBottom: 50
+    paddingBottom: 50,
+    // backgroundColor: 'ghostwhite',
   },
   logoContainer: {
     flex: 1,
     alignItems: 'center',
   },
   logo: {
-    maxWidth: 300,
+    maxWidth: 260,
     maxHeight: 130,
     alignItems: 'center',
-    textAlign: 'center',
     marginBottom: -20,
+    top: 10,
   },
   cartButton: {
     position: 'absolute',

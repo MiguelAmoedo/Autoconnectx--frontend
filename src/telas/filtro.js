@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
+    backgroundColor: 'ghostwhite',
   },
   label: {
     fontSize: 16,
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000000',
-    borderRadius: 4,
+    borderRadius: 30,
   },
   buttonText: {
     color: '#fff',

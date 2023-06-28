@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     paddingBottom: -10,
     marginBottom: -150,
     backgroundColor: 'ghostwhite',
+    
   },
   logoContainer: {
     top: 0,
@@ -93,10 +94,12 @@ const styles = StyleSheet.create({
   logo: {
     width: 350,
     height: 350,
-    marginBottom: 20
+    marginBottom: 20,
+    top: 0,
   },
   title: {
     top: -100,
+    fontWeight: 'bold',
   },
   label: {
     marginBottom: 0,
@@ -107,10 +110,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'lightgray',
     borderRadius: 10,
-    marginBottom: 10,
+    marginBottom: 3,
     paddingHorizontal: 10,
-    textAlign: 'center',
-    top: -60,
+    top: -110
   },
   button: {
     width: '40%',
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -50,
+    marginTop: -90,
   },
   buttonText: {
     color: 'white',

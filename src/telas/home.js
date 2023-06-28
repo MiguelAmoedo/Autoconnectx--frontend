@@ -1,81 +1,68 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, ImageBackground, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
-  const navigation = useNavigation();
-
-  const handleLoginCliente = () => {
-    navigation.navigate('Login');
-  };
-
-  const handleLoginVendedor = () => {
-    navigation.navigate('LoginVendedor');
-  };
+  navigation = useNavigation()
 
   return (
-    <View style={styles.page}>
- 
-      <Text style={styles.title}>AutoconnectX</Text>
-      <View style={styles.formLogin}>
-        <Text style={styles.description}>Bem-vindo à página inicial!</Text>
-        <TouchableOpacity style={styles.btn} onPress={handleLoginCliente}>
-          <Text style={styles.btnText}>Login Cliente</Text>
+    <View style={styles.container}>
+      <ImageBackground
+        source={require('../assets/bgauto.jpg')}
+        style={styles.backgroundImage}
+      >
+        <Image 
+          source={require('../assets/aclogoinitial.png')}
+          style={styles.logo}
+        />
+
+        <Text style={styles.slogan}>Encontre suas peças com facilidade!</Text>
+
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.buttonText}>Começar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={handleLoginVendedor}>
-          <Text style={styles.btnText}>Login Vendedor</Text>
-        </TouchableOpacity>
-      </View>
+      </ImageBackground>
     </View>
   );
 };
 
-const styles = {
-  page: {
+const styles = StyleSheet.create({
+  container: {
     flex: 1,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFF',
   },
   logo: {
-    width: 150,
+    width: 350,
     height: 150,
-    marginBottom: 20,
+    position: 'absolute',
+    top: -20,
+    right: 20,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: '500',
-    color: '#333',
-    marginBottom: 20,
+  button: {
+    backgroundColor: 'white',
+    paddingHorizontal: 70,
+    paddingVertical: 10,
+    borderRadius: 30,
+    marginBottom: 50,
+    top: 300,
+    
   },
-  formLogin: {
-    backgroundColor: '#F1F5F4',
-    borderRadius: 7,
-    padding: 40,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
+  buttonText: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
-  description: {
-    fontSize: 14,
-    color: '#333',
-    marginBottom: 25,
-    textAlign: 'center',
+  slogan: {
+    color: '#fff',
+    top: 280,
+    fontSize: 30,
+    fontWeight: 'bold',
   },
-  btn: {
-    backgroundColor: '#5cc6ba',
-    borderRadius: 4,
-    paddingVertical: 20,
-    paddingHorizontal: 40,
-    marginBottom: 10,
-  },
-  btnText: {
-    color: '#FFF',
-    fontSize: 14,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-};
+});
 
 export default Home;

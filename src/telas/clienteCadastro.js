@@ -136,7 +136,7 @@ const Cadastro = ({ navigation }) => {
       borderWidth: 1,
       borderColor: 'rgb(220,220,220)',
       borderRadius: 10,
-      marginBottom: 20,
+      marginBottom: 15,
       paddingHorizontal: 10,
       top: -25,
       textAlign: 'center',
@@ -146,6 +146,7 @@ const Cadastro = ({ navigation }) => {
       padding: 10,
       alignItems: 'center',
       borderRadius: 10,
+      top: -20
       },
       
       buttonText: {
