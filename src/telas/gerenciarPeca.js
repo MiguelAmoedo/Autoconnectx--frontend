@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Alert, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, Text, FlatList, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
@@ -75,12 +75,11 @@ const LerPecasVendedor = () => {
         },
       });
 
-      const data = await response.json();
-
       if (response.ok) {
         Alert.alert('Sucesso', 'Peça apagada com sucesso');
         fetchData(); // Atualize a lista de peças após a exclusão
       } else {
+        const data = await response.json();
         Alert.alert('Erro', data.error);
       }
     } catch (error) {
@@ -90,24 +89,29 @@ const LerPecasVendedor = () => {
   };
 
   const handleEdit = (peca) => {
-  navigation.navigate('AdicionarPeca', { peca });
-};
+    navigation.navigate('AdicionarPeca', { peca });
+  };
 
+  const filteredPecas = pecas.filter((peca) => peca.status !== 'Vendida' && peca.qtdEstoque > 0);
 
   const renderItem = ({ item }) => (
     <View style={styles.pecaContainer}>
-      <TouchableOpacity onPress={() => handleDelete(item._id)} style={styles.deleteButton}>
-        <Text style={styles.deleteButtonText}>X</Text>
-      </TouchableOpacity>
+      <View style={styles.buuttone}>
+        <TouchableOpacity onPress={() => handleDelete(item._id)} style={styles.buutton}>
+          <Text style={styles.buttonText}>🗑️</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => handleEdit(item)} style={styles.editButton}>
-        <Text style={styles.editButtonText}>A</Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleEdit(item)} style={styles.buutton}>
+          <Text style={styles.buttonText}>✏️</Text>
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Id:</Text>
         <Text style={styles.value}>{item._id}</Text>
-
+        <View style={styles.imagemContainer}>
+          <Image source={{ uri: item.imagem }} style={styles.imagemPeca} />
+        </View>
         <Text style={styles.label}>Nome:</Text>
         <Text style={styles.value}>{item.nome}</Text>
 
@@ -143,12 +147,12 @@ const LerPecasVendedor = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Peças do Vendedor:</Text>
-      {pecas.length === 0 ? (
+      <Text style={styles.title}>Peças Ativas</Text>
+      {filteredPecas.length === 0 ? (
         <Text>Nenhuma peça encontrada.</Text>
       ) : (
         <FlatList
-          data={pecas}
+          data={filteredPecas}
           keyExtractor={(item) => item._id}
           renderItem={renderItem}
           contentContainerStyle={styles.flatListContainer}
@@ -163,11 +167,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: 'ghostwhite',
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 16,
+    left: 130,
   },
   flatListContainer: {
     paddingBottom: 16,
@@ -178,34 +184,33 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'flex-start',
-    backgroundColor: '#F5F5F5',
+    backgroundColor: 'aliceblue',
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: 'gray',
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5, // Adiciona sombra no Android
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
   },
-  deleteButton: {
-    position: 'absolute',
-    top: 8,
-    left: 8,
-    backgroundColor: '#5cc6ba',
-    borderRadius: 4,
-    padding: 4,
+  buuttone: {
+    flexDirection: 'row',
+    left: 235,
   },
-  deleteButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  editButton: {
-    position: 'absolute',
-    top: 8,
-    left: 32,
-    backgroundColor: '#5cc6ba',
-    borderRadius: 4,
-    padding: 4,
-  },
-  editButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
+  buutton: {
+    backgroundColor: '#000',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginHorizontal: 5,
+    borderRadius: 5,
   },
   infoContainer: {
-    marginLeft: 56,
+    marginLeft: 0,
+    right: 90,
   },
   separator: {
     height: 1,
@@ -219,6 +224,18 @@ const styles = StyleSheet.create({
   },
   value: {
     marginBottom: 8,
+  },
+  imagemContainer: {
+    width: '100%',
+    height: 200,
+    marginBottom: 10,
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  imagemPeca: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
 });
 

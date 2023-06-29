@@ -28,7 +28,7 @@ const LoginVendedor = () => {
         Alert.alert('Sucesso', data.message);
         navigation.navigate('VendorControlScreen'); // Navegar para a tela "AdicionarPeca"
       } else {
-        Alert.alert('Erro', data.error);
+        Alert.alert('Dados incorretos', 'Senha ou email incorretos',data.error);
       }
     } catch (error) {
       Alert.alert('Erro', 'Ocorreu um erro ao fazer o login do vendedor');
