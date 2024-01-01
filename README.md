@@ -29,7 +29,7 @@ Para executar a API localmente, siga os passos abaixo:
     "Sobrenome": "Doe",
     "Email": "john.doe@example.com",
     "Senha": "hashed_password",
-    "NivelDeAcesso": 1
+    "NivelDeAcesso": administrador | comum
   },
   // ...
 ]
@@ -48,7 +48,7 @@ Para executar a API localmente, siga os passos abaixo:
   "Sobrenome": "Doe",
   "Email": "john.doe@example.com",
   "Senha": "hashed_password",
-  "NivelDeAcesso": 1
+  "NivelDeAcesso": administrador | comum
 }
 ```
 
@@ -64,7 +64,7 @@ Para executar a API localmente, siga os passos abaixo:
   "Sobrenome": "Doe",
   "Email": "jane.doe@example.com",
   "Senha": "hashed_password",
-  "NivelDeAcesso": 2
+  "NivelDeAcesso": administrador | comum
 }
 ```
 - **Resposta de Exemplo:**
@@ -75,7 +75,7 @@ Para executar a API localmente, siga os passos abaixo:
   "Sobrenome": "Doe",
   "Email": "jane.doe@example.com",
   "Senha": "hashed_password",
-  "NivelDeAcesso": 2
+  "NivelDeAcesso": administrador | comum
 }
 ```
 
@@ -91,7 +91,7 @@ Para executar a API localmente, siga os passos abaixo:
   "Sobrenome": "User",
   "Email": "updated.user@example.com",
   "Senha": "new_hashed_password",
-  "NivelDeAcesso": 3
+  "NivelDeAcesso": administrador | comum
 }
 ```
 - **Resposta de Sucesso:** 204 No Content
@@ -109,7 +109,7 @@ Para executar a API localmente, siga os passos abaixo:
   "Sobrenome": "Doe",
   "Email": "jane.doe@example.com",
   "Senha": "hashed_password",
-  "NivelDeAcesso": 2
+  "NivelDeAcesso": administrador | comum
 }
 ```
 
@@ -141,13 +141,13 @@ curl http://127.0.0.1:5004/usuarios/1
 ### Criar Usuário
 
 ```bash
-curl -X POST -H "Content-Type: application/json" -d '{"Nome": "Jane", "Sobrenome": "Doe", "Email": "jane.doe@example.com", "Senha": "hashed_password", "NivelDeAcesso": 2}' http://127.0.0.1:5004/usuarios
+curl -X POST -H "Content-Type: application/json" -d '{"Nome": "Jane", "Sobrenome": "Doe", "Email": "jane.doe@example.com", "Senha": "hashed_password", "NivelDeAcesso": administrador | comum}' http://127.0.0.1:5004/usuarios
 ```
 
 ### Atualizar Usuário por ID
 
 ```bash
-curl -X PUT -H "Content-Type: application/json" -d '{"Nome": "Updated", "Sobrenome": "User", "Email": "updated.user@example.com", "Senha": "new_hashed_password", "NivelDeAcesso": 3}' http://127.0.0.1:5004/usuarios/2
+curl -X PUT -H "Content-Type: application/json" -d '{"Nome": "Updated", "Sobrenome": "User", "Email": "updated.user@example.com", "Senha": "new_hashed_password", "NivelDeAcesso": administrador | comum}' http://127.0.0.1:5004/usuarios/2
 ```
 
 ### Excluir Usuário por ID
